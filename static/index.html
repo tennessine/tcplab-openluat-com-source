@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TCP Lab 调试工具</title>
+    <style>
+        h3 {
+            color: black;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        .wrap {
+            padding-left: 50px;
+            color: rgba(0, 0, 0, 0.65);
+        }
+
+        .text {
+            width: 80%;
+            height: 320px;
+            resize: none;
+            outline: none;
+            padding-left: 5px;
+        }
+
+        .button {
+            border: 1px solid #ccc;
+            padding: 0 4px;
+            border-radius: 5px;
+            background-color: #f7f7f7;
+        }
+
+        .inputWrap {
+            overflow: hidden;
+        }
+
+        .selectNa {
+            width: 100px;
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .inputNa {
+            width: 60%;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            padding-left: 5px;
+            vertical-align: middle;
+        }
+
+        .send {
+            width: 90px;
+            font-size: 14px;
+            color: white;
+            background-color: #0c8ee9;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            margin: 0 10px 0 50px;
+            display: inline-block;
+            padding: 5px 0;
+        }
+
+        .send:hover {
+            background-color: #49a9ee;
+        }
+
+        .empty {
+            width: 90px;
+            font-size: 14px;
+            color: red;
+            border: none;
+            border: 1px solid #d9d9d9;
+            background-color: #f7f7f7;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px 0;
+        }
+
+        .empty:hover {
+            background-color: red;
+            color: #ffffff;
+        }
+
+        .tableNa {
+            font-size: 14px;
+            color: black;
+            margin-top: 20px;
+            width: 70%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+
+        .tableNa th {
+            border: none;
+            padding: 5px;
+        }
+
+        .tableNa thead {
+            height: 80px;
+            background-color: #f7f7f7;
+        }
+
+        .Notavailable {
+            color: rgba(0, 0, 0, .43);
+            margin-top: 20px;
+            width: 70%;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .clients_table {
+            width: 80%;
+            height: 200px;
+            resize: none;
+            outline: none;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+
+<!--<script type=text/javascrip src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>-->
+
+<link rel="shortcut icon" href="logo.ico" type="image/vnd.microsoft.icon"/>
+<link rel="icon" href="logo.ico" type="image/vnd.microsoft.icon"/>
+<script type=text/javascript src="js/jquery-3.2.1.min.js"></script>
+<script type=text/javascript src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type=text/javascript src="js/jtable.2.4.0/jquery.jtable.min.js"></script>
+<script type=text/javascript src="js/jtable.2.4.0/localization/jquery.jtable.zh-CN.js"></script>
+
+<link rel=stylesheet type=text/css href="/js/jtable.2.4.0/themes/metro/green/jtable.min.css">
+<body>
+<div class='wrap'>
+    <h3>Openluat TCP Lab</h3>
+    <p>
+        <textarea id='board' class='text' readonly=1></textarea>
+        <br>
+        <button class='empty' id='clean'>清空</button>
+    <p><b>如3分钟内没有客户端接入则会自动关闭。</b></p>
+    <p><b>每个服务器最大客户端连接个数为12。</b></p>
+    <p><b>只能处理ascii字符串。</b></p>
+    <h3>TCP服务器IP及端口: <span class='button' id='server_address'></span></h3>
+    <div class='inputWrap'>
+        <!--
+        <select class='selectNa'>
+          <option value ="ASCII">ASCII</option>
+          <option value ="HEX">HEX</option>
+        </select>-->
+        <input class='inputNa' id='to_send'>
+        <button class='send' id='send'>发送</button>
+    </div>
+    <p>
+    <div id="clients_table" class='clients_table'></div>
+</div>
+<script>
+    var FUNCTION_CREATE_SERVER = 0
+    var FUNCTION_CLIENT_CONNECTED = 1
+    var FUNCTION_CLIENT_DISCONNECTED = 2
+    var FUNCTION_CLIENT_NORMAL_MSG = 3
+    var FUNCTION_KICK_CLIENT = 4
+    var FUNCTION_WS_NORMAL_MSG = 5
+    var FUNCTION_NOTIFICATION = 6
+    var FUNCTION_SERVER_IDLE_TIME_LIMIT = 7
+
+    var ERROR_OK = 0
+    var ERROR_IP_USED = 1
+    var ERROR_SERVER_LIMIT = 2
+    var ERROR_SERVER_FATAL = 3
+    var ERROR_UNKNOWN = 4
+
+    var ws = new WebSocket('ws://' + location.host + '/ws');
+    console.log(ws);
+
+    ws.onopen = function (evt) {
+        console.log("Connection open ...");
+        data = {'function': FUNCTION_CREATE_SERVER};
+        ws.send(JSON.stringify(data));
+    };
+
+    function show_text(text) {
+        $('#board').append(text);
+        $('#board').scrollTop($('#board')[0].scrollHeight);
+    }
+
+    function get_date_string() {
+        return new Date().toLocaleString();
+    }
+
+    ws.onmessage = function (evt) {
+        console.log("Received Message: " + evt.data);
+        data = JSON.parse(evt.data);
+
+        if (data['error'] == 0) {
+            if (data['function'] == FUNCTION_CREATE_SERVER) {
+                $('#server_address').text(data['ip'] + ':' + data['port'])
+
+                show_text('服务器建立在[' + data['ip'] + ':' + data['port'] + '] ' + get_date_string() + '\r\n\r\n')
+            } else if (data['function'] == FUNCTION_CLIENT_CONNECTED) {
+                $('#clients_table').jtable('addRecord', {
+                    record: {
+                        address_key: data['address_str'],
+                        address_str: data['address_str'],
+                        //action:1,
+                    },
+                    clientOnly: true,
+                });
+
+                show_text(data['address_str'] + ' 已接入 ' + get_date_string() + '\r\n\r\n');
+            } else if (data['function'] == FUNCTION_CLIENT_DISCONNECTED) {
+                $('#clients_table').jtable('deleteRecord', {
+                    key: data['address_str'],
+                    clientOnly: true,
+                });
+
+                show_text(data['address_str'] + ' 已断开 ' + get_date_string() + '\r\n\r\n');
+            } else if (data['function'] == FUNCTION_CLIENT_NORMAL_MSG) {
+                show_text('来自 ' + data['address_str'] + ' ' + get_date_string() + '\r\n' + data['data'] + '\r\n\r\n');
+            } else if (data['function'] == FUNCTION_SERVER_IDLE_TIME_LIMIT) {
+                show_text('服务器空闲过久 ' + get_date_string() + '\r\n\r\n');
+                //ws.close();
+            }
+        } else {
+            if (data['text']) {
+                show_text(data['text'] + ' ' + get_date_string() + '\r\n\r\n');
+                //$('#server_address').text(data['text'])
+            }
+            ws.close();
+        }
+
+        console.log(data)
+    };
+
+    ws.onclose = function (evt) {
+        console.log("Connection closed.");
+        $('#server_address').text('服务器已关闭，请刷新重建。')
+
+        show_text('服务器已关闭 ' + get_date_string() + '\r\n\r\n');
+
+        $('#clients_table').jtable('destroy');
+        make_jtable();
+    };
+
+    $("#clean").click(function () {
+        $("#board").text('');
+    })
+
+    $("#send").click(function () {
+        msg = $("#to_send").val();
+        data = {'function': FUNCTION_WS_NORMAL_MSG, 'data': msg};
+        result = ws.send(JSON.stringify(data));
+        console.log(result);
+        $("#to_send").val('');
+
+        show_text('来自本页面 ' + get_date_string() + '\r\n' + msg + '\r\n\r\n');
+    })
+
+    function make_jtable() {
+        $('#clients_table').jtable({
+            paging: false, //Enable paging
+            sorting: false, //Enable sorting
+            fields: {
+                address_key: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                address_str: {
+                    title: '客户端IP与端口',
+                    width: '15%',
+                    create: false,
+                    edit: false,
+                    list: true
+                },
+                action: {
+                    title: '',
+                    width: '15%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    display: function (userData) {
+                        var $button = $('<button>断开</button>');
+
+                        $button.click(function () {
+                            data = {'function': FUNCTION_KICK_CLIENT, 'address_str': userData.record.address_str};
+                            ws.send(JSON.stringify(data));
+                        });
+                        return $button;
+                    }
+                },
+            }
+        });
+    }
+
+    make_jtable();
+
+</script>
+</body>
+</html>

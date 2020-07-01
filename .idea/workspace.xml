@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e259770b-dd00-4671-a9e1-a39e6a907f22" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1djp5vITz8wsPxO0SXulQugcDTi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/js/jtable.2.4.0/themes/metro/green" />
+      <recent name="$PROJECT_DIR$/static" />
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/tennessine/gossip">
+    <configuration name="go build github.com/tennessine/gossip" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="gossip" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/gossip.go" />
+      <package value="github.com/tennessine/gossip" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build gossip.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="gossip" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/gossip.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build gossip.go" />
+        <item itemvalue="Go Build.go build github.com/tennessine/gossip" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="960" y="175" key="#com.intellij.ide.util.MemberChooser" timestamp="1593546896808">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state x="960" y="175" key="#com.intellij.ide.util.MemberChooser/43.23.1397.877@43.23.1397.877" timestamp="1593546896808" />
+    <state x="960" y="175" key="#com.intellij.ide.util.MemberChooser/44.23.1396.877@44.23.1396.877" timestamp="1593527164429" />
+    <state x="961" y="175" key="#com.intellij.ide.util.MemberChooser/45.23.1395.877@45.23.1395.877" timestamp="1593373261281" />
+    <state x="428" y="108" key="#go_build_github.com/tennessine/gossip" timestamp="1593546489623">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state x="428" y="108" key="#go_build_github.com/tennessine/gossip/43.23.1397.877@43.23.1397.877" timestamp="1593546489623" />
+    <state width="1354" height="231" key="GridCell.Tab.0.bottom" timestamp="1593531181034">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state width="1354" height="231" key="GridCell.Tab.0.bottom/43.23.1397.877@43.23.1397.877" timestamp="1593531181034" />
+    <state width="1352" height="231" key="GridCell.Tab.0.bottom/44.23.1396.877@44.23.1396.877" timestamp="1593114958372" />
+    <state width="1352" height="231" key="GridCell.Tab.0.bottom/46.23.1394.877@46.23.1394.877" timestamp="1593111554560" />
+    <state width="1354" height="231" key="GridCell.Tab.0.center" timestamp="1593531181033">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state width="1354" height="231" key="GridCell.Tab.0.center/43.23.1397.877@43.23.1397.877" timestamp="1593531181033" />
+    <state width="1352" height="231" key="GridCell.Tab.0.center/44.23.1396.877@44.23.1396.877" timestamp="1593114958371" />
+    <state width="1352" height="231" key="GridCell.Tab.0.center/46.23.1394.877@46.23.1394.877" timestamp="1593111554559" />
+    <state width="1354" height="231" key="GridCell.Tab.0.left" timestamp="1593531181033">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state width="1354" height="231" key="GridCell.Tab.0.left/43.23.1397.877@43.23.1397.877" timestamp="1593531181033" />
+    <state width="1352" height="231" key="GridCell.Tab.0.left/44.23.1396.877@44.23.1396.877" timestamp="1593114958370" />
+    <state width="1352" height="231" key="GridCell.Tab.0.left/46.23.1394.877@46.23.1394.877" timestamp="1593111554559" />
+    <state width="1354" height="231" key="GridCell.Tab.0.right" timestamp="1593531181034">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state width="1354" height="231" key="GridCell.Tab.0.right/43.23.1397.877@43.23.1397.877" timestamp="1593531181034" />
+    <state width="1352" height="231" key="GridCell.Tab.0.right/44.23.1396.877@44.23.1396.877" timestamp="1593114958371" />
+    <state width="1352" height="231" key="GridCell.Tab.0.right/46.23.1394.877@46.23.1394.877" timestamp="1593111554560" />
+  </component>
+</project>
