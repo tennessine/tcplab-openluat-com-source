@@ -261,21 +261,22 @@ func startTCPServer(port int, client *Client) {
 		client.tcpConnections[conn] = conn.RemoteAddr().String()
 
 		// tcp连接 {"port": 54377, "function": 0, "ip": "180.97.81.180", "error": 0}
-		var message Message
-		message = Message{
-			Function: FunctionCreateServer,
-			Ip:       conn.LocalAddr().String(),
-			Port:     0,
-			Error:    0,
-		}
-		if err := client.wsConn.WriteJSON(&message); err != nil {
-			log.Println(err.Error())
-		}
+		//var message Message
+		//ip := strings.Split(conn.RemoteAddr().String(), ":")[0]
+		//port, _ := strconv.Atoi(strings.Split(conn.RemoteAddr().String(), ":")[1])
+		//message = Message{
+		//	Function: FunctionCreateServer,
+		//	Ip:       ip,
+		//	Port:     port,
+		//	Error:    0,
+		//}
+		//if err := client.wsConn.WriteJSON(&message); err != nil {
+		//	log.Println(err.Error())
+		//}
 
 		// 新连接 {"function": 1, "address_str": "1.28.200.109:45950", "error": 0}
-		message = Message{
+		message := Message{
 			Function:   FunctionClientConnected,
-			Ip:         conn.RemoteAddr().String(),
 			AddressStr: conn.RemoteAddr().String(),
 			Error:      0,
 		}
